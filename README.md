@@ -97,3 +97,7 @@ Empty
 
 * 201 - No Content. Advertiser successfully deleted. This is hard delete.
 * 500 - Internal Server Error.
+
+# How to test
+* I used postman rest client to test. Any rest client tool could be used to test.
+* curl command from terminal is another option.
