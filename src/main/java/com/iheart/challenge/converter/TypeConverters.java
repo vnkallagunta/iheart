@@ -19,7 +19,7 @@ public class TypeConverters{
 		return bean.setId(entity.getId())
 				.setName(entity.getName())
 				.setContactName(entity.getContactName())
-				.setCreditLimit(bean.getCreditLimit())
+				.setCreditLimit(entity.getCreditLimit())
 		;
 	}
 }

@@ -1,6 +1,11 @@
 package com.iheart.challenge.bean;
 
-public class Advertiser {
+import java.io.Serializable;
+
+public class Advertiser implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
+
 	private String id;
 	
 	private String name;
