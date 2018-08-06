@@ -60,7 +60,7 @@ http://localhost:8080/advertisers
     "contactName": "iHeart",
     "creditLimit": 999.99
 }
-* 200 - Successfully Created
+* 200 - Successfully Updated
 * 400 - Bad Request
 * 404 - No Advertiser found with given id.
 * 500 - Internal Server Error.
