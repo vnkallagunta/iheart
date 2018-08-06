@@ -9,6 +9,8 @@ This project provide rest api end points to perform following operations for adv
 # Notes
 * Could not implement get credit limit as this could not be represented as a rest resource. Get Advertiser api call fetches   credit limit as part of advertiser details. Inorder to retrieve only credit limit information GET advertiser api could be parameterized perhaps by passing a query parameter specifying the details to filter.
 
+* I used maven as build tool as I am not very hands on with Gradle.
+
 # How to use it
 * git clone https://github.com/vnkallagunta/iheart.git
 * mvn clean spring-boot:run
