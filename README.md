@@ -1,6 +1,6 @@
 
 # About Project
-This project provide rest api end points to perform following operations for advertisor resource.
+This project exposes rest api end points to perform following operations on advertisor resource.
 * Create
 * Get
 * Update
