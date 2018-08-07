@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import com.iheart.challenge.BasicFunctions;
@@ -32,10 +33,17 @@ public class AdvertiserService implements BasicFunctions{
 		}
 		
 		AdvertiserEntity savedEntity = advertiserRepo.save(entity);
+		
+		if(ObjectUtils.isEmpty(savedEntity)) {
+			throw new RuntimeException("Cannot save Advetiser. System Error. Please check logs.");
+		}
 		return TypeConverters.toAdvertiser(savedEntity);
 	}
 	
 	public Advertiser update(final Advertiser advertiser, final String advertiserId) {
+		if(StringUtils.isEmpty(advertiserId)) {
+			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
+		}
 		final Advertiser existingAdvertiser = getAdvertiserById(advertiserId);
 
 		setIfNotNull(existingAdvertiser::setName, advertiser::getName);
@@ -46,20 +54,32 @@ public class AdvertiserService implements BasicFunctions{
 		
 	}
 	
-	public Advertiser getAdvertiserById(final String id) {
+	public Advertiser getAdvertiserById(final String advertiserId) {
+		if(StringUtils.isEmpty(advertiserId)) {
+			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
+		}
 		AdvertiserEntity existingAdvertiser = null;
 		try {
-			existingAdvertiser = advertiserRepo.getOne(id);
+			existingAdvertiser = advertiserRepo.getOne(advertiserId);
+			if(ObjectUtils.isEmpty(existingAdvertiser)) {
+				throw new RuntimeException("Cannot find Advetiser with id "+advertiserId+". System Error. Please check logs.");
+			}
 			return TypeConverters.toAdvertiser(existingAdvertiser);
 		}catch(EntityNotFoundException enfe) {
-			LOGGER.info("Advertiser with id "+id+" not found in database.");
+			LOGGER.info("Advertiser with id "+advertiserId+" not found in database.");
 			throw ResourceNotFoundException.of("Advertiser");
 		}
 	}
 	
-	public void deleteAdvertiserById(final String id) {
+	public void deleteAdvertiserById(final String advertiserId) {
+		if(StringUtils.isEmpty(advertiserId)) {
+			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
+		}
 		try {
-			advertiserRepo.deleteById(id);
+			advertiserRepo.deleteById(advertiserId);
+		}catch(EntityNotFoundException enfe) {
+			LOGGER.info("Advertiser with id "+advertiserId+" not found in database.");
+			throw new RuntimeException("Unable to delete the advertiser with advertiser id : "+advertiserId);
 		}catch(Exception e) {
 			LOGGER.error(e.getMessage());
 			throw new RuntimeException(e);

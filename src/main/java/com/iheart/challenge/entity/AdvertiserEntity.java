@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.util.StringUtils;
+
 @Entity
 @Table(name="Advertiser")
 public class AdvertiserEntity {
@@ -53,5 +55,13 @@ public class AdvertiserEntity {
 		this.creditLimit = creditLimit;
 	}
 
+	public String toString() {
+		final StringBuffer sb = new StringBuffer();
+		sb.append(StringUtils.isEmpty(id)?"id-null-empty":id)
+			.append(StringUtils.isEmpty(name)?"name-null-empty":name)
+			.append(StringUtils.isEmpty(contactName)?"contactName-null-empty":contactName)
+			.append(String.valueOf(creditLimit));
+		return sb.toString();
+	}
 
 }
