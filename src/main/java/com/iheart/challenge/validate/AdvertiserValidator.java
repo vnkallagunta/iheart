@@ -2,16 +2,11 @@ package com.iheart.challenge.validate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiPredicate;
-import java.util.function.Predicate;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.springframework.util.StringUtils;
-
+import com.iheart.challenge.BasicFunctions;
 import com.iheart.challenge.bean.Advertiser;
 
-public class AdvertiserValidator {
+public class AdvertiserValidator implements BasicFunctions{
 	
 	public static final int NAME_MAX_LENGTH = 255;
 	public static final int CONTACT_NAME_MAX_LENGTH = 255;
@@ -25,19 +20,7 @@ public class AdvertiserValidator {
 	
 	private List<ValidationError> errors;
 	
-	public static final Predicate<String> EMPTY_CHECK = (value) -> StringUtils.isEmpty(value);
-	public static final BiPredicate<String, Integer> MAX_LENGTH_CHECK = (value, maxLength) -> (!StringUtils.isEmpty(value) && value.length() > maxLength);
-	public static final Predicate<String> INVALID_CHARACTER_CHECK = (value) -> {
-		if(EMPTY_CHECK.test(value)) {
-			return false;
-		}
-		Pattern p = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE);
-		Matcher m = p.matcher(value);
-		boolean containsInvalidChar = m.find();
-		return containsInvalidChar;
-	};
-	public static final Predicate<Double> NEGATIVE_AMOUNT_CHECK = (value) -> value != 0 && value < 0;
-	public static final Predicate<Double> MAX_AMOUNT_CHECK = (value) -> value != 0 && value > MAX_CREDIT_LIMIT;
+	
 	
 	private AdvertiserValidator(final Advertiser advertiser) {
 		this.advertiser = advertiser;
@@ -124,7 +107,7 @@ public class AdvertiserValidator {
 	}
 	
 	public AdvertiserValidator creditLimitExceeded() {
-		if(MAX_AMOUNT_CHECK.test(advertiser.getCreditLimit())) {
+		if(MAX_AMOUNT_CHECK.test(advertiser.getCreditLimit(), MAX_CREDIT_LIMIT)) {
 			errors.add(TooBig.of(CREDIT_LIMIT_ATTRIBUTE, String.valueOf(advertiser.getCreditLimit()), String.valueOf(MAX_CREDIT_LIMIT)));
 		}
 		return this;

@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import com.iheart.challenge.BasicFunctions;
 import com.iheart.challenge.ResourceNotFoundException;
 import com.iheart.challenge.bean.Advertiser;
 import com.iheart.challenge.converter.TypeConverters;
 import com.iheart.challenge.entity.AdvertiserEntity;
 import com.iheart.challenge.repo.AdvertiserRepository;
+import com.iheart.challenge.utils.Exceptions;
 
 @Component
-public class AdvertiserService implements BasicFunctions{
+public class AdvertiserService implements Exceptions{
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdvertiserService.class);
 
@@ -41,9 +41,8 @@ public class AdvertiserService implements BasicFunctions{
 	}
 	
 	public Advertiser update(final Advertiser advertiser, final String advertiserId) {
-		if(StringUtils.isEmpty(advertiserId)) {
-			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
-		}
+		
+		throwRuntimeExceptionOnEmpty(advertiserId, "Cannot find advertiser. Advertiser id is null/empty.", IllegalArgumentException.class);
 		final Advertiser existingAdvertiser = getAdvertiserById(advertiserId);
 
 		setIfNotNull(existingAdvertiser::setName, advertiser::getName);
@@ -55,9 +54,9 @@ public class AdvertiserService implements BasicFunctions{
 	}
 	
 	public Advertiser getAdvertiserById(final String advertiserId) {
-		if(StringUtils.isEmpty(advertiserId)) {
-			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
-		}
+
+		throwRuntimeExceptionOnEmpty(advertiserId, "Cannot find advertiser. Advertiser id is null/empty.", IllegalArgumentException.class);
+
 		AdvertiserEntity existingAdvertiser = null;
 		try {
 			existingAdvertiser = advertiserRepo.getOne(advertiserId);
@@ -72,9 +71,8 @@ public class AdvertiserService implements BasicFunctions{
 	}
 	
 	public void deleteAdvertiserById(final String advertiserId) {
-		if(StringUtils.isEmpty(advertiserId)) {
-			throw new IllegalArgumentException("Cannot find advertiser. Advertiser id is null/empty.");
-		}
+		throwRuntimeExceptionOnEmpty(advertiserId, "Cannot find advertiser. Advertiser id is null/empty.", IllegalArgumentException.class);
+
 		try {
 			advertiserRepo.deleteById(advertiserId);
 		}catch(EntityNotFoundException enfe) {
