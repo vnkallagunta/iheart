@@ -43,9 +43,14 @@ public class AdvertiserResource {
 		if(errors != null) {
 			return errors;
 		}
+		
 		advertiser.setId(null);
-		final Advertiser savedAdvertiser = service.saveOrUpdate(advertiser);
-        return new ResponseEntity<Advertiser>(savedAdvertiser, HttpStatus.CREATED);
+		try {
+			final Advertiser savedAdvertiser = service.saveOrUpdate(advertiser);
+	        return new ResponseEntity<Advertiser>(savedAdvertiser, HttpStatus.CREATED);
+		}catch(Exception e) {
+			return new ResponseEntity(new InternalServerError("Unexpected System Error. Please try later."), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	
