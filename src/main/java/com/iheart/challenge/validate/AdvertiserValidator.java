@@ -2,6 +2,7 @@ package com.iheart.challenge.validate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import com.iheart.challenge.BasicFunctions;
 import com.iheart.challenge.bean.Advertiser;
@@ -119,5 +120,9 @@ public class AdvertiserValidator implements BasicFunctions{
 	
 	public final List<ValidationError> errors() {
 		return errors;
+	}
+	
+	public static void main(String args[]) {
+		System.out.println(UUID.randomUUID());
 	}
 }
