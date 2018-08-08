@@ -1,3 +1,4 @@
+
 package com.iheart.challenge.resource;
 
 import org.junit.Assert;
@@ -35,7 +36,7 @@ public class AdvertiserResourceTest {
 	
 	@Test
 	public void testCreate() {
-		Mockito.when(service.saveOrUpdate(Mockito.any(Advertiser.class))).thenReturn(advertiser);
+		Mockito.when(service.create(Mockito.any(Advertiser.class))).thenReturn(advertiser);
 		final ResponseEntity<?> response = resource.create(advertiser);
 		Assert.assertEquals(HttpStatus.CREATED, response.getStatusCode());
 	}
@@ -49,7 +50,7 @@ public class AdvertiserResourceTest {
 	
 	@Test
 	public void testCreate500() {
-		Mockito.when(service.saveOrUpdate(Mockito.any(Advertiser.class))).thenThrow(RuntimeException.class);
+		Mockito.when(service.create(Mockito.any(Advertiser.class))).thenThrow(RuntimeException.class);
 		final ResponseEntity<?> response = resource.create(advertiser);
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}

@@ -37,7 +37,7 @@ public class AdvertiserServiceTest {
 		Mockito.when(advertiserRepo.save(Mockito.any(AdvertiserEntity.class))).thenReturn(advertiserEntity);
 		
 		advertiser.setId(null);
-		final Advertiser savedAdvertiser = service.saveOrUpdate(advertiser);
+		final Advertiser savedAdvertiser = service.create(advertiser);
 		
 		Assert.assertNotNull(savedAdvertiser);
 		Assert.assertNotNull(savedAdvertiser.getId());
@@ -52,7 +52,7 @@ public class AdvertiserServiceTest {
 		Mockito.when(advertiserRepo.save(Mockito.any(AdvertiserEntity.class))).thenReturn(null);
 		
 		advertiser.setId(null);
-		service.saveOrUpdate(advertiser);
+		service.create(advertiser);
 	}
 	
 	@Test
