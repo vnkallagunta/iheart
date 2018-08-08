@@ -11,6 +11,8 @@ This project exposes rest api end points to perform following operations on adve
 
 * I used maven as build tool as I am not very hands on with Gradle.
 
+* I used junit for unit testing and Mockito for mocking integration points.
+
 # How to use it
 * git clone https://github.com/vnkallagunta/iheart.git
 * mvn clean spring-boot:run
