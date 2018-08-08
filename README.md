@@ -13,6 +13,8 @@ This project exposes rest api end points to perform following operations on adve
 
 * I used junit for unit testing and Mockito for mocking integration points.
 
+* Swagger and Spring Actuator not integrated yet.
+
 # How to use it
 * git clone https://github.com/vnkallagunta/iheart.git
 * mvn clean spring-boot:run
